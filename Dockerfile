@@ -1,0 +1,34 @@
+# SET FROM WHICH PYTHON OR CONTAINER
+FROM python:3.10-slim
+ENV PYTHONUNBUFFERED 1
+
+# SET WORKING DIR INSIDE DOCKER CONTAINER TO /APP
+WORKDIR /app
+
+# RUN VIR ENV
+RUN python -m venv venv
+ENV PATH="/venv/bin:$PATH"
+
+# COPY REQ.TXT FROM CUR DIR TO MACHINE (DOCKER)
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# COPY ENTIRE PROJECT TO WORK DIR (DOCKER IMAGE)
+COPY . .
+
+# EXPOSE PORT
+EXPOSE 8000
+
+CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+
+# THIS BUILDS THE IMAGE WITH SPECIFIED NAME [-t]
+# COMMANDS: docker build -t [image-name]
+# THIS RUN A CONTAINER USING THE IMAGE, NAME IT [--name], EXPOSES IT PORT [-p], RUN IT DETACHED [-d]  
+# COMMANDS: docker run --name [container-name] -p [expose-port] -d [detached] [image-name]
+
+# WHEN TO USE DOCKER COMPOSE : WHEN USING MULTIPLE IMAGES in ONE CONTAINER
+
+# WHAT I DONT UNDERSTAND:
+# 1. HOW DOES THIS WORK IN DEPLOYMENT?
+# 2. WHAT ABOUT CI/CD WORKFLOWS?
+# 3. 

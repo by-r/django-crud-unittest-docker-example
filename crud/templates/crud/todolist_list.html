@@ -1,0 +1,37 @@
+{% extends "_base.html" %}
+{% block title %}
+    Test
+{% endblock title %}
+{% block content %}
+    <div class="table-responsive">
+        <table class="table ">
+            <thead>
+                <tr>
+                    <th scope="col">Title</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Status</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for todo in todos %}
+                    <tr class="">
+                        <td scope="row ">
+                            <a href="{% url "detail" todo.pk %}">{{ todo.title }}</a>
+                        </td>
+                        <td>{{ todo.desc }}</td>
+                        <td>{{ todo.isdone }}</td>
+                        <td>
+                            <a class="btn btn-success"
+                               href="{% url "update" todo.pk %}"
+                               role="button">Update</a>
+                            <a class="btn btn-danger"
+                               href="{% url "delete" todo.pk %}"
+                               role="button">Delete</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock content %}
